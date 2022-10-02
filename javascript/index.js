@@ -40,14 +40,30 @@ function renderBeer(drink){
   let drinkCard = document.createElement('div')
   let brewName = document.createElement('h3')
   let brewType = document.createElement("p")
+  let brewStreet = document.createElement("p")
+  let brewCity = document.createElement("p")
+  let brewState = document.createElement("p")
+  let brewCountry = document.createElement("p")
+  let brewPostalCode = document.createElement("p")
+  let brewURL = document.createElement("p")
   // //the data is an array of objects, this is picking the first item in the array
   // //you can also use Math.random if you don't just want the first item
   
   // add DOM attributes
-
+  drinkCard.id = `drink - ${drink.id}`
+  drinkCard.className = "drink-card"
+  //Noam code help below
   brewName.innerHTML = drink[0].name
   brewType.innerHTML = drink[0].brewery_type
-  drinkCard.append(brewName,brewType)
+  brewStreet.innerHTML = drink[0].street
+  brewCity.innerHTML = drink[0].city
+  brewState.innerHTML = drink[0].state
+  brewCountry.innerHTML = drink[0].country
+  brewPostalCode.innerHTML = drink[0].postal_code
+  brewURL.innerHTML = drink[0].website_url
+
+
+  drinkCard.append(brewName,brewType, brewStreet, brewCity, brewState, brewCountry, brewPostalCode, brewURL)
   document.getElementById('brewContainer').append(drinkCard)
 }
 
