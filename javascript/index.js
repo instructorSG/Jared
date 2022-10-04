@@ -1,4 +1,23 @@
 
+//Event listener "change" for light/dark toggle
+function toggle() {
+  let darkToggle = document.querySelector('#darkToggle');
+    darkToggle.addEventListener('change', (e)=> { 
+    console.log("toggg", e)
+    document.body.classList.toggle('dark');
+  });
+
+  toggle()
+
+
+}
+let darkToggle = document.querySelector('#darkToggle');
+
+darkToggle.addEventListener('change', (e)=> { 
+  console.log("toggg", e)
+  document.body.classList.toggle('dark');
+});
+
 //fetch data and and append results from search based on city or state
 document.getElementById('beer-search').addEventListener('click', function(e){
   let citySearch = document.getElementById("city-input").value
@@ -10,11 +29,11 @@ document.getElementById('beer-search').addEventListener('click', function(e){
        .then(data => {
             console.log("click", data) 
             
-            document.getElementById('clearBrew').innerHTML = ""
+            document.getElementById('newBrew').innerHTML = " "
+            //clearing brew obj with string when searching for new city.
 
             data.forEach(renderBeerCard)
-
-            
+            //looping through each obj passed by renderBeerCard function
        });
 
 })
@@ -34,39 +53,22 @@ function renderBeerCard (drink, index, allBrews) {
     brewType.innerHTML = drink.brewery_type
 
       drinkCard.append(brewName,brewType, likeBtn)
-      document.getElementById('clearBrew').append(drinkCard)
+      document.getElementById('newBrew').append(drinkCard)
 }
 
 function likeBrew(drink) {
   console.log("-----",drink)
 }
 
+
+// pseudocode
+// take rendered beer card and once liked, append to Favs list
+//
+//persist object once refreshed, obj will stay in favs list. 
+
     
-// }
-// request()
 
-// stack over flow reference
-// const request = async (cityName) => {
-//   const beerApi = `https://api.openbrewerydb.org/breweries?by_city=${encodeURIComponent(cityName)}`;
-//   const res = await fetch(beerApi);
-//   if (res.ok) {
-//     const breweries = await res.json();
-//     breweries.forEach(brewery => console.log(brewery));
-//   } else {
-//     console.log("Error!");
-//   }
-// };
 
-//   document.addEventListener("DOMContentLoaded", e => {
-//   const searchBtn = document.getElementById("bsearch");
-
-//   searchBtn.addEventListener("click", async function (e) {
-//     e.preventDefault;
-//     let searchQuery = document.getElementById("beer-search").value;
-  
-//     await request(searchQuery);
-//   });
-// })
 
 
 
@@ -123,10 +125,7 @@ function likeBrew(drink) {
 //   document.getElementById('brewContainer').append(drinkCard)
 // }
 
-//check answer:
-// function init() {
-// .forEach(beerObj => renderBeer(beerObj))
-// }
+
 
 
 
