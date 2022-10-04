@@ -33,8 +33,7 @@ document.getElementById('form').addEventListener('submit', function(e){
 
 function renderBeerCard(drink, index, allBrews) {
   // console.log(drink, index, allBrews)
-  //like btn setup 
-  let likes = 0
+  
 
     let drinkCard = document.createElement('div')
     let brewName = document.createElement('h3')
@@ -90,7 +89,7 @@ function likeBrew(drink) {
     drinkCard.append(brewName,brewType, brewCity, brewState,likeBtn)
     document.getElementById('Favs').append(drinkCard)
 }
-likeBrew()
+
 
 
 
