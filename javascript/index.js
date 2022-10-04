@@ -6,17 +6,9 @@ function toggle() {
     console.log("toggg", e)
     document.body.classList.toggle('dark');
   });
-
-  toggle()
-
-
 }
-let darkToggle = document.querySelector('#darkToggle');
+toggle()
 
-darkToggle.addEventListener('change', (e)=> { 
-  console.log("toggg", e)
-  document.body.classList.toggle('dark');
-});
 
 //fetch data and and append results from search based on city or state
 document.getElementById('beer-search').addEventListener('click', function(e){
