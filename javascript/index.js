@@ -11,15 +11,16 @@ toggle()
 
 
 //fetch data and and append results from search based on city or state
-document.getElementById('beer-search').addEventListener('click', function(e){
+document.getElementById('form').addEventListener('submit', function(e){
+  e.preventDefault()
   let citySearch = document.getElementById("city-input").value
   const beerApi = `https://api.openbrewerydb.org/breweries?by_city=${encodeURIComponent(citySearch)}`;// make sure there's no spaces in city name
   
   console.log("search", citySearch)
   fetch(beerApi)
-       .then(response => response.json())
+       .then(response => response.json())//parse json response 
        .then(data => {
-            console.log("click", data) 
+            console.log("submit", data) 
             
             document.getElementById('newBrew').innerHTML = " "
             //clearing brew obj with string when searching for new city.
@@ -30,31 +31,63 @@ document.getElementById('beer-search').addEventListener('click', function(e){
 
 })
 
-function renderBeerCard (drink, index, allBrews) {
-  console.log(drink, index, allBrews)
+function renderBeerCard(drink, index, allBrews) {
+  // console.log(drink, index, allBrews)
+  //like btn setup 
+  let likes = 0
 
     let drinkCard = document.createElement('div')
     let brewName = document.createElement('h3')
     let brewType = document.createElement("p")
+    let brewCity = document.createElement("p")
+    let brewState = document.createElement("p")
     let likeBtn = document.createElement("button")
+    let brewURL = document.createElement("p")
     likeBtn.addEventListener("click", (e) => {
+      alert("I like this brewery")
+      console.log("like click", e , drink)
+
+      // let favBrew = document.getElementById("Favs")
+
+      
+        //like the object
+          //create a like button and add it to object 
+          //click the button to like obj. 
+          //when clicked, stored to favs list. 
+     
+
+
       likeBrew(drink)
     })
 
     brewName.innerHTML = drink.name
     brewType.innerHTML = drink.brewery_type
+    brewCity.innerHTML = drink.city
+    brewState.innerHTML = drink.state
+    brewURL.innerHTML = drink.website_url
 
-      drinkCard.append(brewName,brewType, likeBtn)
+      drinkCard.append(brewName,brewType, brewCity, brewState,likeBtn)
       document.getElementById('newBrew').append(drinkCard)
 }
 
+//once rendered beer card is liked, appends  to favs list 
 function likeBrew(drink) {
-  console.log("-----",drink)
+  let li = document.createElement("li")
+  document.getElementById('Favs').append(li)
+
+  let drinkCard = document.createElement('div')
+  let brewName = document.createElement('h3')
+
 }
+likeBrew()
+
 
 
 // pseudocode
-// take rendered beer card and once liked, append to Favs list
+// setup function to like obj
+// append li to favs list. 
+// take rendered beer card and 
+// once liked, append to Favs list
 //
 //persist object once refreshed, obj will stay in favs list. 
 
