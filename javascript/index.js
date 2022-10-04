@@ -54,8 +54,6 @@ function renderBeerCard(drink, index, allBrews) {
           //create a like button and add it to object 
           //click the button to like obj. 
           //when clicked, stored to favs list. 
-     
-
 
       likeBrew(drink)
     })
@@ -70,14 +68,27 @@ function renderBeerCard(drink, index, allBrews) {
       document.getElementById('newBrew').append(drinkCard)
 }
 
-//once rendered beer card is liked, appends  to favs list 
+//once rendered beer card click event is  fired(button pressed), appends  to favs list 
 function likeBrew(drink) {
-  let li = document.createElement("li")
-  document.getElementById('Favs').append(li)
+  // let li = document.createElement("li")
+  // document.getElementById('Favs').append(drinkCard)
 
   let drinkCard = document.createElement('div')
   let brewName = document.createElement('h3')
+  let brewType = document.createElement("p")
+  let brewCity = document.createElement("p")
+  let brewState = document.createElement("p")
+  let likeBtn = document.createElement("button")
+  let brewURL = document.createElement("p")
 
+    brewName.innerHTML = drink.name
+    brewType.innerHTML = drink.brewery_type
+    brewCity.innerHTML = drink.city
+    brewState.innerHTML = drink.state
+    brewURL.innerHTML = drink.website_url
+
+    drinkCard.append(brewName,brewType, brewCity, brewState,likeBtn)
+    document.getElementById('Favs').append(drinkCard)
 }
 likeBrew()
 
