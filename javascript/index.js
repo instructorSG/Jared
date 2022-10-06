@@ -40,6 +40,7 @@ function renderBeerCard(brewery) {
     let brewCity = document.createElement("p")
     let brewState = document.createElement("p")
     let likeBtn = document.createElement("button")
+    likeBtn.textContent = "Like!"
     let brewURL = document.createElement("p")
     likeBtn.addEventListener("click", (e) => {
       console.log("like click", e , brewery)
