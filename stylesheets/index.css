@@ -3,7 +3,10 @@ h1 {
 }
 
 #Favs {
-    margin-top: 300px;
+    /* margin-top: 150px; */
+    background-color: pink;
+    height: 300px;
+    width: 1500px;
 }
 
 .dark {

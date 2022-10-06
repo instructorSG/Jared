@@ -3,8 +3,10 @@
 function toggle() {
   let darkToggle = document.querySelector('#darkToggle');
     darkToggle.addEventListener('change', (e)=> { 
-    console.log("toggg", e)
-    document.body.classList.toggle('dark');
+    // console.log("toggg", e)
+    document.body.classList.toggle('dark')
+    // console.log(toggle)
+    ;
   });
 }
 toggle()
@@ -14,28 +16,32 @@ toggle()
 document.getElementById('form').addEventListener('submit', function(e){
   e.preventDefault()
   let citySearch = document.getElementById("city-input").value
-  const beerApi = `https://api.openbrewerydb.org/breweries?by_city=${encodeURIComponent(citySearch)}`;// make sure there's no spaces in city name
-  
+  const beerApi = `https://api.openbrewerydb.org/breweries?by_city=${citySearch}`;// make sure there's no spaces in city name
+  // citySearch is now a parm in my fetch API 
   console.log("search", citySearch)
   fetch(beerApi)
        .then(response => response.json())//parse json response 
+       //jsonify so that the response is readable. 
        .then(data => {
             console.log("submit", data) 
-            
-            document.getElementById('newBrew').innerHTML = " "
+            document.getElementById('newBrewery').innerHTML = " "
             //clearing brew obj with string when searching for new city.
 
-            data.forEach(renderBeerCard)
-            //looping through each obj passed by renderBeerCard function
+            // data.forEach(renderBeerCard)
+            data.forEach(obj => {            
+              renderBeerCard(obj)
+
+            })
+              //looping through each obj passed by renderBeerCard function
        });
 
 })
 
-function renderBeerCard(drink, index, allBrews) {
-  // console.log(drink, index, allBrews)
+function renderBeerCard(brewery) {
+
   
 
-    let drinkCard = document.createElement('div')
+    let breweryCard = document.createElement('div')
     let brewName = document.createElement('h3')
     let brewType = document.createElement("p")
     let brewCity = document.createElement("p")
@@ -43,54 +49,89 @@ function renderBeerCard(drink, index, allBrews) {
     let likeBtn = document.createElement("button")
     let brewURL = document.createElement("p")
     likeBtn.addEventListener("click", (e) => {
-      alert("I like this brewery")
-      console.log("like click", e , drink)
+      console.log("like click", e , brewery)
 
-      // let favBrew = document.getElementById("Favs")
-
+      //invoking likeBrew function, passing in the obj argument
+      likeBrew(brewery)
       
-        //like the object
+    })
+
+    brewName.textContent = brewery.name
+    brewType.textContent = brewery.brewery_type
+    brewCity.textContent = brewery.city
+    brewState.textContent = brewery.state
+    brewURL.textContent = brewery.website_url
+
+      breweryCard.append(brewName,brewType, brewCity, brewState,likeBtn)
+      document.getElementById('newBrewery').append(breweryCard)
+}
+
+
+//once rendered beer card click event is  fired(button pressed), appends  to favs list 
+function likeBrew(brewery) {
+   //like the object
           //create a like button and add it to object 
           //click the button to like obj. 
           //when clicked, stored to favs list. 
-
-      likeBrew(drink)
-    })
-
-    brewName.innerHTML = drink.name
-    brewType.innerHTML = drink.brewery_type
-    brewCity.innerHTML = drink.city
-    brewState.innerHTML = drink.state
-    brewURL.innerHTML = drink.website_url
-
-      drinkCard.append(brewName,brewType, brewCity, brewState,likeBtn)
-      document.getElementById('newBrew').append(drinkCard)
-}
-
-//once rendered beer card click event is  fired(button pressed), appends  to favs list 
-function likeBrew(drink) {
-  // let li = document.createElement("li")
-  // document.getElementById('Favs').append(drinkCard)
-
-  let drinkCard = document.createElement('div')
+  
+  let breweryCard = document.createElement('div')
   let brewName = document.createElement('h3')
   let brewType = document.createElement("p")
   let brewCity = document.createElement("p")
   let brewState = document.createElement("p")
   let likeBtn = document.createElement("button")
   let brewURL = document.createElement("p")
+  
+    brewName.textContent = brewery.name
+    brewType.textContent = brewery.brewery_type
+    brewCity.textContent = brewery.city
+    brewState.textContent = brewery.state
+    brewURL.textContent = brewery.website_url
+    
+    breweryCard.append(brewName,brewType, brewCity, brewState, likeBtn)
+    document.getElementById('Favs').append(breweryCard)
 
-    brewName.innerHTML = drink.name
-    brewType.innerHTML = drink.brewery_type
-    brewCity.innerHTML = drink.city
-    brewState.innerHTML = drink.state
-    brewURL.innerHTML = drink.website_url
-
-    drinkCard.append(brewName,brewType, brewCity, brewState,likeBtn)
-    document.getElementById('Favs').append(drinkCard)
-}
+  }
 
 
+
+
+
+
+
+
+  //able to clear object after being added to "Favs" Div. 
+  // function clearFav(drink, drinkCard) {
+  //   // const clearBeerCards = document.getElementById('Favs')
+  //   const clearBeerCard = document.createElement("button")
+
+  //   clearBeerCard.addEventListener('click', function(event) {
+  //   clearBeerCard.remove();
+  //   console.log("clearClick", drink, drinkCard, event)
+  // });
+
+  
+
+
+    // Pseudocode
+    //Grab appended element that I want to clear. add event listener for click to remove appended element. 
+    //use a selector to grab appended dom elements. May have to create id to add to element.
+    //provide method to remove element. 
+    //return  a empty string.
+
+// }
+
+
+
+
+
+
+
+
+
+
+
+  
 
 
 // pseudocode
@@ -123,7 +164,7 @@ function likeBrew(drink) {
     
     
 // }
-// request()
+// request(drink)
 
 // use function below for single obj grab. 
 
