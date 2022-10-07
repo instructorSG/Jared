@@ -84,8 +84,14 @@ function likeBrew(brewery) {
 
   }
 
-
-
+function clearBreweryFavCard() {
+  let clearBox = document.getElementById("Favs")
+  clearBox.addEventListener("click", (e) => {
+    console.log(e.target)
+    e.target.remove()
+  })
+}
+clearBreweryFavCard()
 
 
 
