@@ -13,27 +13,29 @@ toggle()
 
 
 //fetch data and and append results from search based on city or state
-document.getElementById('form').addEventListener('submit', function(e){
+document.getElementById('form').addEventListener('submit', async function(e){
   e.preventDefault()
   let citySearch = document.getElementById("city-input").value
-  const beerApi = `https://api.openbrewerydb.org/breweries?by_city=${citySearch}`;// make sure there's no spaces in city name
+  const beerApi = `https://api.openbrewerydb.org/breweries?by_city=${citySearch}`
   // citySearch is now a parm in my fetch API 
-  console.log("search", citySearch)
-  fetch(beerApi)
+  // console.log("search", citySearch)
+  await fetch(beerApi)
        .then(response => response.json())//parse json response 
        //jsonify so that the response is readable. 
-       .then(data => {
-            console.log("submit", data) 
-            document.getElementById('newBrewery').innerHTML = " "
+       .then(breweries => {
+            console.log("submit", breweries) 
+            document.getElementById('breweryContainer').innerHTML = " "
             //clearing brew obj with string when searching for new city.
-            data.forEach(obj => {            
-              renderBeerCard(obj)
+            breweries.forEach(obj => {            
+              renderBeerCards(obj)
             })
               //looping through each obj passed by renderBeerCard function
        });
 })
 
-function renderBeerCard(brewery) {
+
+
+function renderBeerCards(brewery) {
     let breweryCard = document.createElement('div')
     let brewName = document.createElement('h3')
     let brewType = document.createElement("p")
@@ -42,8 +44,8 @@ function renderBeerCard(brewery) {
     let likeBtn = document.createElement("button")
     likeBtn.textContent = "Like!"
     let brewURL = document.createElement("p")
-    likeBtn.addEventListener("click", (e) => {
-      console.log("like click", e , brewery)
+    likeBtn.addEventListener("click", () => {
+      console.log("like click", brewery)
 
       //invoking likeBrew function, passing in the obj argument
       likeBrew(brewery)
@@ -57,9 +59,11 @@ function renderBeerCard(brewery) {
     brewURL.textContent = brewery.website_url
 
       breweryCard.append(brewName,brewType, brewCity, brewState,likeBtn)
-      document.getElementById('newBrewery').append(breweryCard)
+      document.getElementById('breweryContainer').append(breweryCard)
       
 }
+
+
 
 
 //once rendered beer card click event is  fired(button pressed), appends  to favs list 
