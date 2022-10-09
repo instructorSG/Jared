@@ -25,6 +25,7 @@ function renderBeerCards(brewery) {
     let brewState = document.createElement("p")
     let likeBtn = document.createElement("button")
     likeBtn.textContent = "Like!"
+    //handle mouse event to search by city  
     likeBtn.addEventListener("click", () => {
         // console.log("like click")
     
@@ -45,7 +46,10 @@ function renderBeerCards(brewery) {
 }
 
 
-//
+
+
+
+
 function likeBrew(brewery) {
   
     let breweryCard = document.createElement('div')
@@ -67,16 +71,23 @@ function likeBrew(brewery) {
     }
   
 // clear card from Favorites
-  function clearBreweryFavCard() {
-    let newDiv = document.createElement("div")
-    let clearBox = document.getElementById('Favs')
-    clearBox.addEventListener("click", (e) => {
-      console.log("TARGET", clearBox)
-      clearBox.remove()
-    })
-    document.getElementById('Favs').append(newDiv)
-  }
-  clearBreweryFavCard()
+//   function clearBreweryFavCard() {
+//     // let newDiv = document.createElement("div")
+//     let clearContainer = document.getElementById('Favs')
+//     clearContainer.addEventListener("click", (e) => {
+//       console.log("TARGET", clearContainer)
+//       clearContainer.remove()
+//       clearBreweryFavCard()
+//     })
+//     // document.getElementById('Favs').append(newDiv)
+//     // clearBreweryFavCard()
+//   }
+//   clearBreweryFavCard()
+
+
+function handleFavDelete(e) {
+    e.target.parentNode.remove()
+}
 
   
 
@@ -87,14 +98,17 @@ function likeBrew(brewery) {
 
     
 
-//event listener for searching breweries by city
-document.getElementById('form').addEventListener('submit',  function(e){
-    e.preventDefault()
-    let citySearch = document.getElementById("city-input").value
-    // console.log("Brewery by City", e)
-     requestBreweriesData(citySearch)
-    // call function and pass argument of each specified search. 
-                
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    let form = document.getElementById('form')
+    form.addEventListener('submit', (e) => {
+        e.preventDefault()
+        let citySearch = document.getElementById("city-input").value
+        requestBreweriesData(citySearch)
+        form.reset()
+
+    })
 })
 
 
