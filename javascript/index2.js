@@ -7,8 +7,8 @@ async function requestBreweriesData(searchByCity) {
     .then(data => {
         console.log("Breweries Array", data)
         document.getElementById('breweryContainer').innerHTML = " "
-        data.forEach(brewery => {
-            renderBeerCards(brewery)
+        data.forEach(breweries => {
+            renderBeerCards(breweries)
             
         })
     })
@@ -16,8 +16,8 @@ async function requestBreweriesData(searchByCity) {
 
 
 
-function renderBeerCards(brewery) {
-    // console.log("BREWW", brewery)
+function renderBeerCards(breweries) {
+    console.log("BREWW", breweries)
     let breweryCard = document.createElement('div')
     let brewName = document.createElement('h3')
     let brewType = document.createElement("p")
@@ -30,27 +30,23 @@ function renderBeerCards(brewery) {
         // console.log("like click")
     
         //invoking likeBrew function, passing in the obj argument
-        likeBrew(brewery)
+        likeBrew(breweries)
           
         })
     
-    brewName.textContent = brewery.name
-    brewType.textContent = brewery.brewery_type
-    brewCity.textContent = brewery.city
-    brewState.textContent = brewery.state
-        
+    brewName.textContent = breweries.name
+    brewType.textContent = breweries.brewery_type
+    brewCity.textContent = breweries.city
+    brewState.textContent = breweries.state
+    debugger
     
     breweryCard.append(brewName,brewType, brewCity, brewState,likeBtn)
     document.getElementById('breweryContainer').append(breweryCard)
           
 }
 
-
-
-
-
-
-function likeBrew(brewery) {
+//function to append and clear in Favs list. 
+function likeBrew(breweries) {
   
     let breweryCard = document.createElement('div')
     let brewName = document.createElement('h3')
@@ -59,35 +55,39 @@ function likeBrew(brewery) {
     let brewState = document.createElement("p")
     let clearBtn = document.createElement("button")
     clearBtn.textContent = "clear"
+    clearBtn.className = "clear Button"
     
-      brewName.textContent = brewery.name
-      brewType.textContent = brewery.brewery_type
-      brewCity.textContent = brewery.city
-      brewState.textContent = brewery.state
+      brewName.textContent = breweries.name
+      brewType.textContent = breweries.brewery_type
+      brewCity.textContent = breweries.city
+      brewState.textContent = breweries.state
       
       
       breweryCard.append(brewName,brewType, brewCity, brewState, clearBtn)
-      document.getElementById('Favs').append(breweryCard)
+      document.getElementById('Favs').appendChild(breweryCard)
     }
   
 // clear card from Favorites
-//   function clearBreweryFavCard() {
-//     // let newDiv = document.createElement("div")
-//     let clearContainer = document.getElementById('Favs')
-//     clearContainer.addEventListener("click", (e) => {
-//       console.log("TARGET", clearContainer)
-//       clearContainer.remove()
-//       clearBreweryFavCard()
-//     })
-//     // document.getElementById('Favs').append(newDiv)
-//     // clearBreweryFavCard()
-//   }
-//   clearBreweryFavCard()
+  function handleCardDelete() {
+    
+      document.addEventListener("click", (e) => {
+       if(e.target.classList.value === "clear Button") {
+              e.target.parentNode.remove()
+
+       }
+    
+    })
+   
+  }
+  handleCardDelete()
 
 
-function handleFavDelete(e) {
-    e.target.parentNode.remove()
-}
+
+
+// function handleFavDelete(e) {
+//     e.target.parentNode.remove()
+//     console.log("----", e)
+// }
 
   
 
@@ -99,7 +99,7 @@ function handleFavDelete(e) {
     
 
 
-
+//submit form based on user specified city and reset. 
 document.addEventListener('DOMContentLoaded', () => {
     let form = document.getElementById('form')
     form.addEventListener('submit', (e) => {
