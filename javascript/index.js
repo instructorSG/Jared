@@ -23,7 +23,7 @@ document.getElementById('form').addEventListener('submit', async function(e){
        .then(response => response.json())//parse json response 
        //jsonify so that the response is readable. 
        .then(breweries => {
-            console.log("submit", breweries) 
+            // console.log("submit", breweries) 
             document.getElementById('breweryContainer').innerHTML = " "
             //clearing brew obj with string when searching for new city.
             breweries.forEach(obj => {            
@@ -45,7 +45,7 @@ function renderBeerCards(brewery) {
     likeBtn.textContent = "Like!"
     let brewURL = document.createElement("p")
     likeBtn.addEventListener("click", () => {
-      console.log("like click", brewery)
+      // console.log("like click", brewery)
 
       //invoking likeBrew function, passing in the obj argument
       likeBrew(brewery)
@@ -89,11 +89,13 @@ function likeBrew(brewery) {
   }
 
 function clearBreweryFavCard() {
+  let newDiv = document.createElement("div")
   let clearBox = document.getElementById("Favs")
   clearBox.addEventListener("click", (e) => {
     console.log(e.target)
-    e.target.remove()
+    clearBox.remove()
   })
+  document.getElementById("clear").append(newDiv)
 }
 clearBreweryFavCard()
 

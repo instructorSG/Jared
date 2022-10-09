@@ -17,6 +17,7 @@ async function requestBreweriesData(searchByCity) {
 
 
 function renderBeerCards(brewery) {
+    // console.log("BREWW", brewery)
     let breweryCard = document.createElement('div')
     let brewName = document.createElement('h3')
     let brewType = document.createElement("p")
@@ -25,7 +26,7 @@ function renderBeerCards(brewery) {
     let likeBtn = document.createElement("button")
     likeBtn.textContent = "Like!"
     likeBtn.addEventListener("click", () => {
-        console.log("like click", brewery)
+        // console.log("like click")
     
         //invoking likeBrew function, passing in the obj argument
         likeBrew(brewery)
@@ -44,7 +45,7 @@ function renderBeerCards(brewery) {
 }
 
 
-//once rendered beer card click event is  fired(button pressed), appends  to favs list 
+//
 function likeBrew(brewery) {
   
     let breweryCard = document.createElement('div')
@@ -52,43 +53,53 @@ function likeBrew(brewery) {
     let brewType = document.createElement("p")
     let brewCity = document.createElement("p")
     let brewState = document.createElement("p")
-    let likeBtn = document.createElement("button")
-    let brewURL = document.createElement("p")
+    let clearBtn = document.createElement("button")
+    clearBtn.textContent = "clear"
     
       brewName.textContent = brewery.name
       brewType.textContent = brewery.brewery_type
       brewCity.textContent = brewery.city
       brewState.textContent = brewery.state
-      brewURL.textContent = brewery.website_url
       
-      breweryCard.append(brewName,brewType, brewCity, brewState, likeBtn)
+      
+      breweryCard.append(brewName,brewType, brewCity, brewState, clearBtn)
       document.getElementById('Favs').append(breweryCard)
-  
     }
   
+// clear card from Favorites
   function clearBreweryFavCard() {
-    let clearBox = document.getElementById("Favs")
+    let newDiv = document.createElement("div")
+    let clearBox = document.getElementById('Favs')
     clearBox.addEventListener("click", (e) => {
-      console.log(e.target)
-      e.target.remove()
+      console.log("TARGET", clearBox)
+      clearBox.remove()
     })
+    document.getElementById('Favs').append(newDiv)
   }
   clearBreweryFavCard()
+
+  
+
+  //Psuedo 
+  //problem: cannot add another favorite brewery after clearing the first one
+  //solution: add brewery onto favorites list, then clear after. Repeat process 
+  //psuedo: 
+
     
 
-  //event listener for searching breweries by city
-document.getElementById('form').addEventListener('submit', async function(e){
+//event listener for searching breweries by city
+document.getElementById('form').addEventListener('submit',  function(e){
     e.preventDefault()
     let citySearch = document.getElementById("city-input").value
-    console.log("Brewery by City", e)
-    await requestBreweriesData(citySearch)
+    // console.log("Brewery by City", e)
+     requestBreweriesData(citySearch)
     // call function and pass argument of each specified search. 
                 
 })
 
 
 //Event listener "change" for light/dark toggle
-function toggle() {
+function toggleSwitch() {
     let darkToggle = document.querySelector('#darkToggle');
       darkToggle.addEventListener('change', (e)=> { 
       // console.log("toggg", e)
@@ -97,4 +108,4 @@ function toggle() {
       ;
     });
   }
-  toggle()
+  toggleSwitch()
