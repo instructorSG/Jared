@@ -18,12 +18,15 @@ async function requestBreweriesData(searchByCity) {
 
 function renderBeerCards(breweries) {
     console.log("BREWW", breweries)
-    let breweryCard = document.createElement('div')
-    let brewName = document.createElement('h3')
-    let brewType = document.createElement("p")
-    let brewCity = document.createElement("p")
-    let brewState = document.createElement("p")
-    let likeBtn = document.createElement("button")
+    const breweryCard = document.createElement('div')
+    const styleCard = breweryCard
+    styleCard.className = "card"
+    const brewName = document.createElement('h3')
+    const brewType = document.createElement("p")
+    const brewCity = document.createElement("p")
+    const brewState = document.createElement("p")
+    const cityAndState = document.createElement("p")
+    const likeBtn = document.createElement("button")
     likeBtn.textContent = "Like!"
     //handle mouse event to search by city  
     likeBtn.addEventListener("click", () => {
@@ -35,12 +38,13 @@ function renderBeerCards(breweries) {
         })
     
     brewName.textContent = breweries.name
-    brewType.textContent = breweries.brewery_type
+    brewType.textContent =  breweries.brewery_type
     brewCity.textContent = breweries.city
     brewState.textContent = breweries.state
-    debugger
+    cityAndState.textContent = breweries.city.state
     
-    breweryCard.append(brewName,brewType, brewCity, brewState,likeBtn)
+    
+    breweryCard.append(brewName,brewType, brewCity, brewState,likeBtn,)
     document.getElementById('breweryContainer').append(breweryCard)
           
 }
@@ -48,12 +52,14 @@ function renderBeerCards(breweries) {
 //function to append and clear in Favs list. 
 function likeBrew(breweries) {
   
-    let breweryCard = document.createElement('div')
-    let brewName = document.createElement('h3')
-    let brewType = document.createElement("p")
-    let brewCity = document.createElement("p")
-    let brewState = document.createElement("p")
-    let clearBtn = document.createElement("button")
+    const breweryCard = document.createElement('div')
+    const styleCard = breweryCard
+    styleCard.className = "card"
+    const brewName = document.createElement('h3')
+    const brewType = document.createElement("p")
+    const brewCity = document.createElement("p")
+    const brewState = document.createElement("p")
+    const clearBtn = document.createElement("button")
     clearBtn.textContent = "clear"
     clearBtn.className = "clear Button"
     
@@ -69,34 +75,17 @@ function likeBrew(breweries) {
   
 // clear card from Favorites
   function handleCardDelete() {
-    
       document.addEventListener("click", (e) => {
+        //provide if statement to provide the click with a target. 
        if(e.target.classList.value === "clear Button") {
+        //use classList as alternative to grabbing a delimited space string of className
               e.target.parentNode.remove()
 
        }
-    
     })
    
   }
   handleCardDelete()
-
-
-
-
-// function handleFavDelete(e) {
-//     e.target.parentNode.remove()
-//     console.log("----", e)
-// }
-
-  
-
-  //Psuedo 
-  //problem: cannot add another favorite brewery after clearing the first one
-  //solution: add brewery onto favorites list, then clear after. Repeat process 
-  //psuedo: 
-
-    
 
 
 //submit form based on user specified city and reset. 
