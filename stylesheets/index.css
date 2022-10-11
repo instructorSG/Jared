@@ -1,15 +1,36 @@
-h1 {
+ body {
+   
+
+
+ }
+ 
+ .header {
     text-align: center;
+    background-color: rgb(159, 187, 196);
+    
+    
 }
 
-#Favs {
-    /* margin-top: 150px; */
-    /* background-color: pink; */
-    height: 300px;
-    width: 1500px;
-}
+.card {
+    border:solid black 20px;
+    margin-left: 10 px;
+    margin-right: 10 px;
+    display: flex;
+    /* flex-wrap: wrap; */
+    /* justify-content: space-between; */
+    text-align: center;
+    overflow: auto;
+    
+    }
 
+
+/* event listener toggle mode */
 .dark {
     color: white;
     background: #444;
   }
+
+  #styleFav {
+    
+  }
+
