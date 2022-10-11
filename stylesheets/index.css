@@ -10,17 +10,18 @@
     
     
 }
+#breweryContainer {
+    display: flex;
+}
 
-.card {
-    border:solid black 20px;
+div.card {
+    border:solid white 5px;
     margin-left: 10 px;
     margin-right: 10 px;
-    display: flex;
-    /* flex-wrap: wrap; */
-    /* justify-content: space-between; */
+    width: 20%;
     text-align: center;
-    overflow: auto;
-    
+    background-color: aqua;
+
     }
 
 
@@ -30,7 +31,8 @@
     background: #444;
   }
 
-  #styleFav {
-    
+  #favStyle {
+    /* margin-top: 2000px;
+    position: relative; */
   }
 
