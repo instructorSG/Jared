@@ -1,12 +1,11 @@
 # Project Name 
-This will be overview of project. detail what the project is and its purpose 
+Brewery Finder
 
 ### Requirements 
-* Have json-server installed 
+* API fetch: `https://api.openbrewerydb.org/breweries?by_city` 
 
 ## installation instructions 
 * Fork and clone
-* Run json server for db.json
 * Open index.html in the browser 
 
 

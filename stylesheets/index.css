@@ -22,7 +22,8 @@ div.card {
     margin-right: 10 px;
     width: 60%;
     text-align: center;
-    background-color: aqua;
+    background-color: rgb(12, 173, 231);
+    
 
     }
 
@@ -39,5 +40,8 @@ div.card {
     background: #444;
   }
 
+#toggle {
+
+}
 
 

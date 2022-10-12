@@ -1,8 +1,7 @@
-
-
 // request data from API 
-async function requestBreweriesData(searchByCity) {
-    await fetch(`https://api.openbrewerydb.org/breweries?by_city=${searchByCity}`)
+async function requestBreweriesData(citySearch) {
+  //Andrew help: why does the parm provide mulitple searches of the cities but with out parm it only returns 
+    await fetch(`https://api.openbrewerydb.org/breweries?by_city=${citySearch}`)
     .then(response => response.json())
     .then(data => {
         console.log("Breweries Array", data)
@@ -14,10 +13,8 @@ async function requestBreweriesData(searchByCity) {
     })
 }
 
-
-
 function renderBeerCards(breweries) {
-    console.log("BREWW", breweries)
+    // console.log("BREWW", breweries)
     const breweryCard = document.createElement('div')
     const styleCard = breweryCard
     styleCard.className = "card"
@@ -25,13 +22,11 @@ function renderBeerCards(breweries) {
     const brewType = document.createElement("p")
     const brewCity = document.createElement("p")
     const brewState = document.createElement("p")
-    const cityAndState = document.createElement("p")
     const likeBtn = document.createElement("button")
     likeBtn.textContent = "Like!"
     //handle mouse event to search by city  
     likeBtn.addEventListener("click", () => {
         // console.log("like click")
-    
         //invoking likeBrew function, passing in the obj argument
         likeBrew(breweries)
           
@@ -41,15 +36,13 @@ function renderBeerCards(breweries) {
     brewType.textContent =  breweries.brewery_type
     brewCity.textContent = breweries.city
     brewState.textContent = breweries.state
-    cityAndState.textContent = breweries.city.state
-    
     
     breweryCard.append(brewName,brewType, brewCity, brewState,likeBtn,)
     document.getElementById('breweryContainer').append(breweryCard)
           
 }
 
-//function to append and clear in Favs list. 
+//function to append. clearBtn setup
 function likeBrew(breweries) {
   
     const breweryCard = document.createElement('div')
@@ -68,7 +61,6 @@ function likeBrew(breweries) {
       brewCity.textContent = breweries.city
       brewState.textContent = breweries.state
       
-      
       breweryCard.append(brewName,brewType, brewCity, brewState, clearBtn)
       document.getElementById('Favs').appendChild(breweryCard)
     }
@@ -80,13 +72,10 @@ function likeBrew(breweries) {
        if(e.target.classList.value === "clear Button") {
         //use classList as alternative to grabbing a delimited space string of className
               e.target.parentNode.remove()
-
        }
     })
-   
   }
   handleCardDelete()
-
 
 //submit form based on user specified city and reset. 
 document.addEventListener('DOMContentLoaded', () => {
@@ -99,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     })
 })
-
 
 //Event listener "change" for light/dark toggle
 function toggleSwitch() {
