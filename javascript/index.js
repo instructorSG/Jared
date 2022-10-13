@@ -1,95 +1,63 @@
-// request data from API 
 async function requestBreweriesData(citySearch) {
   fetch(`https://api.openbrewerydb.org/breweries?by_city=${citySearch}`)
     .then(response => response.json())
     .then(data => {
-      console.log("Breweries Array", data)
+      console.log("data", data)
       document.getElementById('breweryContainer').innerHTML = " "
-      data.forEach(breweries => {
-        renderBeerCards(breweries)
+
+      data.forEach(brewery => {
+        renderBeerCards(brewery)
+        console.log("Breweries Array", brewery)
 
       })
     })
 }
 
-
-
-function renderBeerCards(breweries) {
-  console.log("BREWW", breweries)
-  // console.log("BREWW", breweries)
-  const breweryCard = document.createElement('div')
-  const styleCard = breweryCard
-  styleCard.className = "card"
-  const brewName = document.createElement('h3')
-  const brewType = document.createElement("p")
-  const brewCity = document.createElement("p")
-  const brewState = document.createElement("p")
-  const cityAndState = document.createElement("p")
-  const likeBtn = document.createElement("button")
-  likeBtn.textContent = "Like!"
-  likeBtn.addEventListener("click", () => {
-    // console.log("like click")
-
-    //invoking likeBrew function, passing in the obj argument
-    likeBrew(breweries)
-
-  })
-
-  brewName.textContent = breweries.name
-  brewType.textContent = breweries.brewery_type
-  brewCity.textContent = breweries.city
-  brewState.textContent = breweries.state
-  cityAndState.textContent = breweries.city.state
-
-
-  breweryCard.append(brewName, brewType, brewCity, brewState, likeBtn,)
+function renderBeerCards(brewery) {
+  const breweryCard = createCard(brewery, "render")
   document.getElementById('breweryContainer').append(breweryCard)
 
 }
 
+function likebrewery(brewery) {
+  const breweryCard = createCard(brewery)
+  document.getElementById('Favs').append(breweryCard)
+}
 
-//function to append. clearBtn setup
-function likeBrew(breweries) {
+function createCard(brewery, beerCard) {
 
   const breweryCard = document.createElement('div')
-  const styleCard = breweryCard
-  styleCard.className = "card"
+  breweryCard.className = "card"
   const brewName = document.createElement('h3')
   const brewType = document.createElement("p")
-  const brewCity = document.createElement("p")
-  const brewState = document.createElement("p")
-  const clearBtn = document.createElement("button")
-  clearBtn.textContent = "clear"
-  clearBtn.className = "clear Button"
+  const brewLocation = document.createElement("p")
 
-  brewName.textContent = breweries.name
-  brewType.textContent = breweries.brewery_type
-  brewCity.textContent = breweries.city
-  brewState.textContent = breweries.state
+  brewName.textContent = brewery.name
+  brewType.textContent = `Type: ${brewery.brewery_type}`
+  brewLocation.textContent = `${brewery.city}, ${brewery.state}`
+  breweryCard.append(brewName, brewType, brewLocation)
+  if (beerCard === "render") {
+    const likeBtn = document.createElement("button")
+    likeBtn.textContent = "Like!"
+    likeBtn.addEventListener("click", () => {
 
+      likebrewery(brewery)
 
-  breweryCard.append(brewName, brewType, brewCity, brewState, clearBtn)
-  document.getElementById('Favs').appendChild(breweryCard)
-}
+    })
+    breweryCard.append(likeBtn)
+  } else {
 
-// clear card from Favorites
-function handleCardDelete() {
-  document.addEventListener("click", (e) => {
-    //provide if statement to provide the click with a target. 
-    if (e.target.classList.value === "clear Button") {
-      //use classList as alternative to grabbing a delimited space string of className
+    const clearBtn = document.createElement("button")
+    clearBtn.textContent = "clear"
+    clearBtn.addEventListener("click", (e) => {
       e.target.parentNode.remove()
-
-    }
-  })
+    })
+    breweryCard.append(clearBtn)
+  }
+  return breweryCard
 
 }
-handleCardDelete()
 
-
-
-
-//submit form based on user specified city and reset. 
 document.addEventListener('DOMContentLoaded', () => {
   let form = document.getElementById('form')
   form.addEventListener('submit', (e) => {
@@ -97,19 +65,17 @@ document.addEventListener('DOMContentLoaded', () => {
     let citySearch = document.getElementById("city-input").value
     requestBreweriesData(citySearch)
     form.reset()
+
   })
 })
 
-
-//Event listener "change" for light/dark toggle
 function toggleSwitch() {
-  let modeToggle = document.querySelector('#modeToggle');
-  modeToggle.addEventListener('change', (e) => {
-    // console.log("toggg", e)
+  let modeToggle = document.getElementById('modeToggle');
+  modeToggle.textContent = "toggle"
+  modeToggle.addEventListener('change', () => {
+
     document.body.classList.toggle('dark')
-      // console.log(toggle)
-      ;
-  });
+  })
 }
 toggleSwitch()
 
