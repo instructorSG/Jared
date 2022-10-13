@@ -23,9 +23,8 @@ function renderBeerCards(brewery) {
 
 }
 
-function likeBrew(brewery) {
+function likebrewery(brewery) {
   const breweryCard = createCard(brewery, "clearBtn")
-
   document.getElementById('Favs').appendChild(breweryCard)
 }
 
@@ -90,8 +89,8 @@ function createCard(brewery, parm1) {
     
     likeBtn.addEventListener("click", () => {
       // console.log("like click")
-      //invoking likeBrew function, passing in the obj argument
-      likeBrew(brewery)
+      //invoking likebrewery function, passing in the obj argument
+      likebrewery(brewery)
 
     })
     breweryCard.append(likeBtn)
@@ -102,7 +101,7 @@ function createCard(brewery, parm1) {
     
     clearBtn.addEventListener("click", (e) => {
       // console.log("like click")
-      //invoking likeBrew function, passing in the obj argument
+      //invoking likebrewery function, passing in the obj argument
       e.target.parentNode.remove()
 
     })

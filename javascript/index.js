@@ -1,6 +1,106 @@
+// request data from API 
+async function requestBreweriesData(citySearch) {
+  await fetch(`https://api.openbrewerydb.org/breweries?by_city=${citySearch}`)
+  .then(response => response.json())
+  .then(data => {
+      console.log("Breweries Array", data)
+      document.getElementById('breweryContainer').innerHTML = " "
+      data.forEach(breweries => {
+          renderBeerCards(breweries)
+          
+      })
+  })
+}
+
+
+
+function renderBeerCards(breweries) {
+  console.log("BREWW", breweries)
+  // console.log("BREWW", breweries)
+  const breweryCard = document.createElement('div')
+  const styleCard = breweryCard
+  styleCard.className = "card"
+  const brewName = document.createElement('h3')
+  const brewType = document.createElement("p")
+  const brewCity = document.createElement("p")
+  const brewState = document.createElement("p")
+  const cityAndState = document.createElement("p")
+  const likeBtn = document.createElement("button")
+  likeBtn.textContent = "Like!"
+  likeBtn.addEventListener("click", () => {
+      // console.log("like click")
+
+      //invoking likeBrew function, passing in the obj argument
+      likeBrew(breweries)
+
+      })
+  
+  brewName.textContent = breweries.name
+  brewType.textContent =  breweries.brewery_type
+  brewCity.textContent = breweries.city
+  brewState.textContent = breweries.state
+  cityAndState.textContent = breweries.city.state
+
+
+  breweryCard.append(brewName,brewType, brewCity, brewState,likeBtn,)
+  document.getElementById('breweryContainer').append(breweryCard)
+
+}
+
+
+//function to append. clearBtn setup
+function likeBrew(breweries) {
+
+  const breweryCard = document.createElement('div')
+  const styleCard = breweryCard
+  styleCard.className = "card"
+  const brewName = document.createElement('h3')
+  const brewType = document.createElement("p")
+  const brewCity = document.createElement("p")
+  const brewState = document.createElement("p")
+  const clearBtn = document.createElement("button")
+  clearBtn.textContent = "clear"
+  clearBtn.className = "clear Button"
+  
+    brewName.textContent = breweries.name
+    brewType.textContent = breweries.brewery_type
+    brewCity.textContent = breweries.city
+    brewState.textContent = breweries.state
+
+
+    breweryCard.append(brewName,brewType, brewCity, brewState, clearBtn)
+    document.getElementById('Favs').appendChild(breweryCard)
+  }
+
+// clear card from Favorites
+function handleCardDelete() {
+    document.addEventListener("click", (e) => {
+      //provide if statement to provide the click with a target. 
+     if(e.target.classList.value === "clear Button") {
+      //use classList as alternative to grabbing a delimited space string of className
+            e.target.parentNode.remove()
+
+     }
+  })
+
+}
+handleCardDelete()
+
+
+//submit form based on user specified city and reset. 
+document.addEventListener('DOMContentLoaded', () => {
+  let form = document.getElementById('form')
+  form.addEventListener('submit', (e) => {
+      e.preventDefault()
+      let citySearch = document.getElementById("city-input").value
+      requestBreweriesData(citySearch)
+      form.reset()
+  })
+})
+
 
 //Event listener "change" for light/dark toggle
-function toggle() {
+function toggleSwitch() {
   let darkToggle = document.querySelector('#darkToggle');
     darkToggle.addEventListener('change', (e)=> { 
     // console.log("toggg", e)
@@ -9,144 +109,6 @@ function toggle() {
     ;
   });
 }
-toggle()
-
-
-//fetch data and and append results from search based on city or state
-document.getElementById('form').addEventListener('submit', async function(e){
-  e.preventDefault()
-  let citySearch = document.getElementById("city-input").value
-  const beerApi = `https://api.openbrewerydb.org/breweries?by_city=${citySearch}`
-  // citySearch is now a parm in my fetch API 
-  // console.log("search", citySearch)
-  await fetch(beerApi)
-       .then(response => response.json())//parse json response 
-       //jsonify so that the response is readable. 
-       .then(breweries => {
-            // console.log("submit", breweries) 
-            document.getElementById('breweryContainer').innerHTML = " "
-            //clearing brew obj with string when searching for new city.
-            breweries.forEach(obj => {            
-              renderBeerCards(obj)
-            })
-              //looping through each obj passed by renderBeerCard function
-       });
-})
-
-
-
-function renderBeerCards(brewery) {
-    let breweryCard = document.createElement('div')
-    let brewName = document.createElement('h3')
-    let brewType = document.createElement("p")
-    let brewCity = document.createElement("p")
-    let brewState = document.createElement("p")
-    let likeBtn = document.createElement("button")
-    likeBtn.textContent = "Like!"
-    let brewURL = document.createElement("p")
-    likeBtn.addEventListener("click", () => {
-      // console.log("like click", brewery)
-
-      //invoking likeBrew function, passing in the obj argument
-      likeBrew(brewery)
-      
-    })
-
-    brewName.textContent = brewery.name
-    brewType.textContent = brewery.brewery_type
-    brewCity.textContent = brewery.city
-    brewState.textContent = brewery.state
-    brewURL.textContent = brewery.website_url
-
-      breweryCard.append(brewName,brewType, brewCity, brewState,likeBtn)
-      document.getElementById('breweryContainer').append(breweryCard)
-      
-}
-
-
-
-
-//once rendered beer card click event is  fired(button pressed), appends  to favs list 
-function likeBrew(brewery) {
-  
-  let breweryCard = document.createElement('div')
-  let brewName = document.createElement('h3')
-  let brewType = document.createElement("p")
-  let brewCity = document.createElement("p")
-  let brewState = document.createElement("p")
-  let likeBtn = document.createElement("button")
-  let brewURL = document.createElement("p")
-  
-    brewName.textContent = brewery.name
-    brewType.textContent = brewery.brewery_type
-    brewCity.textContent = brewery.city
-    brewState.textContent = brewery.state
-    brewURL.textContent = brewery.website_url
-    
-    breweryCard.append(brewName,brewType, brewCity, brewState, likeBtn)
-    document.getElementById('Favs').append(breweryCard)
-
-  }
-
-function clearBreweryFavCard() {
-  let newDiv = document.createElement("div")
-  let clearBox = document.getElementById("Favs")
-  clearBox.addEventListener("click", (e) => {
-    console.log(e.target)
-    clearBox.remove()
-  })
-  document.getElementById("clear").append(newDiv)
-}
-clearBreweryFavCard()
-
-
-
-
-
-  //able to clear object after being added to "Favs" Div. 
-  // function clearFav(drink, drinkCard) {
-  //   // const clearBeerCards = document.getElementById('Favs')
-  //   const clearBeerCard = document.createElement("button")
-
-  //   clearBeerCard.addEventListener('click', function(event) {
-  //   clearBeerCard.remove();
-  //   console.log("clearClick", drink, drinkCard, event)
-  // });
-
-  
-
-
-    // Pseudocode
-    //Grab appended element that I want to clear. add event listener for click to remove appended element. 
-    //use a selector to grab appended dom elements. May have to create id to add to element.
-    //provide method to remove element. 
-    //return  a empty string.
-
-// }
-
-
-
-// pseudocode
-// setup function to like obj
-// append li to favs list. 
-// take rendered beer card and 
-// once liked, append to Favs list
-//
-//persist object once refreshed, obj will stay in favs list. 
-
+toggleSwitch()
     
 
-
-
-
-
-
-
-
-
-
-
-
-
- 
-  
