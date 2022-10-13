@@ -1,15 +1,13 @@
- body {
-   
 
-
- }
  
  .header {
-    text-align: center;
     background-color: rgb(159, 187, 196);
-    
-    
 }
+h1 {
+    text-align: center;
+}
+
+
 #breweryContainer {
     display: flex;
     width: max-content;
@@ -30,9 +28,11 @@ div.card {
     #Favs {
         display: flex;
         width: max-content;
-        padding: 5px;
     }
 
+    #Favorites {
+        margin-top: 100px ;
+    }
 
 /* event listener toggle mode */
 .dark {
@@ -40,8 +40,7 @@ div.card {
     background: #444;
   }
 
-#toggle {
 
+h2 {
+    text-decoration: underline;
 }
-
-
