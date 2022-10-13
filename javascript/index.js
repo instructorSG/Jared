@@ -26,7 +26,7 @@ function likebrewery(brewery) {
 
 function createCard(brewery, beerCard) {
 
-  const breweryCard = document.createElement('div')
+  const breweryCard = document.createElement('li')
   breweryCard.className = "card"
   const brewName = document.createElement('h3')
   const brewType = document.createElement("p")
@@ -36,17 +36,17 @@ function createCard(brewery, beerCard) {
   brewType.textContent = `Type: ${brewery.brewery_type}`
   brewLocation.textContent = `${brewery.city}, ${brewery.state}`
   breweryCard.append(brewName, brewType, brewLocation)
-  if (beerCard === "render") {
+  if (beerCard === "render") { 
     const likeBtn = document.createElement("button")
     likeBtn.textContent = "Like!"
     likeBtn.addEventListener("click", () => {
-
+      
       likebrewery(brewery)
 
     })
     breweryCard.append(likeBtn)
   } else {
-
+    
     const clearBtn = document.createElement("button")
     clearBtn.textContent = "clear"
     clearBtn.addEventListener("click", (e) => {
@@ -70,11 +70,13 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 function toggleSwitch() {
-  let modeToggle = document.getElementById('modeToggle');
-  modeToggle.textContent = "toggle"
-  modeToggle.addEventListener('change', () => {
-
+  let toggleMode = document.getElementById('toggleMode');
+  toggleMode.textContent = "toggle"
+  toggleMode.addEventListener('change', () => {
+  
     document.body.classList.toggle('dark')
+      
+      
   })
 }
 toggleSwitch()
