@@ -1,12 +1,12 @@
 // request data from API 
 async function requestBreweriesData(citySearch) {
-  
+//city search is based on the user submit value. 
   fetch(`https://api.openbrewerydb.org/breweries?by_city=${citySearch}`)
     .then(response => response.json())
     .then(data => {
       console.log("data", data)
       document.getElementById('breweryContainer').innerHTML = " "
-      
+
       data.forEach(brewery => {
         renderBeerCards(brewery)
         console.log("Breweries Array", brewery)
@@ -14,7 +14,6 @@ async function requestBreweriesData(citySearch) {
       })
     })
 }
-
 
 function renderBeerCards(brewery) {
   // console.log("BREWW", brewery)
@@ -24,14 +23,54 @@ function renderBeerCards(brewery) {
 }
 
 function likebrewery(brewery) {
-  const breweryCard = createCard(brewery, "clearBtn")
-  document.getElementById('Favs').appendChild(breweryCard)
+  const breweryCard = createCard(brewery)
+  document.getElementById('Favs').append(breweryCard)
 }
 
+function createCard(brewery, beerCard) {
+  //beerCard augument determines rather I have a liked btn or clear btn. 
 
+  const breweryCard = document.createElement('div')
+  //class name for CSS purpose
+  breweryCard.className = "card"
+  const brewName = document.createElement('h3')
+  const brewType = document.createElement("p")
+  const brewLocation = document.createElement("p")
 
+  brewName.textContent = brewery.name
+  brewType.textContent = `Type: ${brewery.brewery_type}`
+  brewLocation.textContent = `${brewery.city}, ${brewery.state}`
+  breweryCard.append(brewName, brewType, brewLocation)
+  // set the condition that our argument beerCard will equal renderBeerCards which will be true
+  if (beerCard === "render") {
+    //this is the render container 
+    const likeBtn = document.createElement("button")
+    likeBtn.textContent = "Like!"
+    likeBtn.addEventListener("click", () => {
+      // console.log("like click")
+      //call likebrewery function, to pass in card with likeBtn
+      likebrewery(brewery)
 
+    })
+    breweryCard.append(likeBtn)
+  } else {
+    // this is the favorites container
+    const clearBtn = document.createElement("button")
+    clearBtn.textContent = "clear"
+    clearBtn.addEventListener("click", (e) => {
+      // console.log("like click")
+      e.target.parentNode.remove()
+    })
+    breweryCard.append(clearBtn)
+  }
+  return breweryCard
 
+  //problem:I  want to render createCard for both breweryContainer and Favs container
+  //solution: I want return createCard based on a conditional statement. If its renderBeer card
+  //return card with likeBtn
+  //or else return Favs container  with clearBtn
+
+}
 
 //submit form based on user specified city and reset. 
 document.addEventListener('DOMContentLoaded', () => {
@@ -47,9 +86,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //Event listener "change" for light/dark toggle
 function toggleSwitch() {
-  let darkToggle = document.querySelector('#darkToggle');
-  darkToggle.textContent = "toggle"
-  darkToggle.addEventListener('change', (e) => {
+  let modeToggle = document.getElementById('modeToggle');
+  modeToggle.textContent = "toggle"
+  modeToggle.addEventListener('change', () => {
     // console.log("toggg", e)
     document.body.classList.toggle('dark')
       // console.log(toggle)
@@ -59,61 +98,3 @@ function toggleSwitch() {
 toggleSwitch()
 
 
-
-
-
-
-
-function createCard(brewery, parm1) {
-//parm 1 determines rather I have a liked card or clear card. 
-
-  const breweryCard = document.createElement('div')
-  
-  breweryCard.className = "card"
-  const brewName = document.createElement('h3')
-  const brewType = document.createElement("p")
-  const brewLocation = document.createElement("p")
- 
-  brewName.textContent = brewery.name
-  brewType.textContent = `Type: ${brewery.brewery_type}`
-  brewLocation.textContent = `${brewery.city}, ${brewery.state}`
- 
-
-  breweryCard.append(brewName, brewType, brewLocation)
-
-  if (parm1 === "render") {
-    //this is the render container 
-
-    const likeBtn = document.createElement("button")
-    likeBtn.textContent = "Like!"
-    
-    likeBtn.addEventListener("click", () => {
-      // console.log("like click")
-      //invoking likebrewery function, passing in the obj argument
-      likebrewery(brewery)
-
-    })
-    breweryCard.append(likeBtn)
-  } else {
-    // this is the favorites container
-    const clearBtn = document.createElement("button")
-    clearBtn.textContent = "clear"
-    
-    clearBtn.addEventListener("click", (e) => {
-      // console.log("like click")
-      //invoking likebrewery function, passing in the obj argument
-      e.target.parentNode.remove()
-
-    })
-    breweryCard.append(clearBtn)
-  }
-
-  return breweryCard
-
-  //I  want to render createCard for both breweryContainer and Favs container
-  //solution: I want return createCard based on a conditional statement. If its renderBeer card
-  //return card with likeBtn
-  //or else return Favs card with clearBtn
-
-
-}

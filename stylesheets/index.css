@@ -21,7 +21,7 @@ div.card {
     width: 60%;
     text-align: center;
     background-color: rgb(12, 173, 231);
-    
+    width: max-content;
 
     }
 
