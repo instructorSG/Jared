@@ -72,11 +72,13 @@ h1 {
 }
 
 li.card {
+    border-radius: 25px;
+    word-wrap: break-word;
     list-style-type: none;
     border: solid white 2px;
     margin-right: 50px;
-    width: 150px;
-    height: 200px;
+    width: 170px;
+    height: 250px;
     text-align: center;
     background-color: rgb(12, 173, 231);
 }
